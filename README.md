@@ -42,7 +42,7 @@ The APK is written to `app/build/outputs/apk/debug/app-debug.apk`. The install a
 
 ## Run the core regression checks
 
-Run `.\gradlew.bat :app:testDebugUnitTest` (macOS or Linux: `./gradlew :app:testDebugUnitTest`) to execute all three suites with JUnit.
+Run `.\gradlew.bat :app:testDebugUnitTest` (macOS or Linux: `./gradlew :app:testDebugUnitTest`) to execute all four suites with JUnit.
 
 The trace, CSV parser, and playback clock are plain Java. With `JAVA_HOME` pointing to a JDK, run the same checks directly from PowerShell:
 
@@ -56,6 +56,7 @@ $sources = (Get-ChildItem "$sourceDir/Replay*.java","$sourceDir/TraceCsv.java","
 & "$env:JAVA_HOME/bin/java" -cp $classes com.krishang.cockpit.ReplayTraceTest
 & "$env:JAVA_HOME/bin/java" -cp $classes com.krishang.cockpit.ReplayClockTest
 & "$env:JAVA_HOME/bin/java" -cp $classes com.krishang.cockpit.TraceCsvTest
+& "$env:JAVA_HOME/bin/java" -cp $classes com.krishang.cockpit.ReplayAcceptanceTest
 ```
 
-The trace checks exercise sample selection, invalid traces, the freshness boundary, recovery and rewind. The clock checks cover pause, seeking during playback, end-of-trace behavior and replay.
+The acceptance test compares direct seeks with continuous playback through the stale interval and recovery, including a long pause and a rewind. The component tests exercise sample selection, CSV import, invalid traces, seeking during playback, and end-of-trace behavior.
